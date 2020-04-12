@@ -15,4 +15,4 @@ Mock.mock('/mock/floors', {code: 200, data: floors})
 // export default ???   // 不需要使用export向外暴露
 
 // 但必须要必须执行一次  ==> 2个mock的接口就可以访问
-console.log('mockServer执行了...')
+// console.log('mockServer执行了...')

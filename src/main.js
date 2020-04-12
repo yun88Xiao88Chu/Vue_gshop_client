@@ -16,8 +16,13 @@ import './mock/mockServer' // 加载mock接口的主模块
 Vue.component('TypeNav', TypeNav) // 全局使用<TypeNav/> <type-nav/>
 Vue.component('Carousel', Carousel) // 全局使用<Carousel/> <carousel/>
 
+Vue.config.productionTip = false
+
 new Vue({
   // el: '#app'
+  beforeCreate() {
+    Vue.prototype.$bus = this
+  },
   render: h => h(App),  // 将App组件对象渲染到页面上
   router, // 配置路由器(内部的路由才生效访问)
   store, // 配置vuex的核心管理对象store  ===> 组件中可以通过$store得到store对象

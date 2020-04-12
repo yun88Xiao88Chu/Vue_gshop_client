@@ -6,6 +6,7 @@ import {reqProductList} from '@/api'
 const state = {
   productList: {}, // 搜索出的商品列表相关数据的对象 
 }
+
 const mutations = {
   /* 
   接收保存商品列表相关数据对象
@@ -14,12 +15,18 @@ const mutations = {
     state.productList = productList
   }
 }
-const actions = {
 
+const actions = {
   /* 
   根据指定的搜索条件, 异步获取商品列表的action
   */
   async getProductList ({commit}, searchParams) {
+    searchParams = {...searchParams}
+    Object.keys(searchParams).forEach(key=>{
+      if(searchParams[key]===''){
+        delete searchParams[key]
+      }
+    })
     // 1. ajax请求,调用/api引入进来搜索的接口函数,传一个搜索的params参数,获取数据
     const result = await reqProductList(searchParams)
     // 2. 如果成功, 提交给mutation

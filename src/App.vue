@@ -16,7 +16,7 @@ import Footer from './components/Footer'
 export default {
   name: 'App',
 
-  async mounted () {
+  mounted () {
     // const result = await reqBaseCategoryList()
     // console.log('result', result)
 

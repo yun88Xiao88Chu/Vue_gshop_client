@@ -26,7 +26,7 @@ export default {
 
   // 在页面初始显示后立即执行
   mounted () {
-    console.log('mounted', this.carouselList.length)  // 为0, banner数据是异步获取的
+    // console.log('mounted', this.carouselList.length)  // 为0, banner数据是异步获取的
     /* setTimeout(() => {
       // 要求: 创建swiper对象必须要在轮播列表页面显示之后执行才可以  ==> 否则轮播效果有问题
       // new Swiper('.swiper-container', { // 有问题, 会匹配所有此类名元素
@@ -56,7 +56,7 @@ export default {
         // 只有数组中有数据, 才需要创建swiper对象 
         if (this.carouselList.length===0) return
 
-        console.log('watch carouselList', this.carouselList.length)  // 执行3次行
+        // console.log('watch carouselList', this.carouselList.length)  // 执行3次行
         /* 
         数据绑定流程 ==> 更新状态数据  ==> 同步调用监视的回调函数 ==> 界面就会自动 `异步`更新
         */
