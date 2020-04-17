@@ -59,8 +59,9 @@
               <li class="yui3-u-1-5" v-for="goods in productList.goodsList" :key="goods.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="javascript:">
-                      <img :src="goods.defaultImg" /></a>
+                    <router-link :to="{name:'detail',params:{skuId:goods.id}}">
+                       <img :src="goods.defaultImg" />
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -69,7 +70,7 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <a href="javascript:">{{goods.title}}</a>
+                     <router-link :to="`/detail/${goods.id}`">{{goods.title}}</router-link>
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
@@ -82,35 +83,13 @@
               </li>
             </ul>
           </div>
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <Pagination :pageConfig="{
+            total: productList.total,           //总数据个数
+            showPageNo: 3,                     //连续页码
+            pageNo: options.pageNo,            //当前页码
+            pageSize: options.pageSize        //每页数据个数 
+          }"
+          @changeCurrentPage="getProductList"/>
         </div>
       </div>
     </div>
@@ -180,9 +159,14 @@
     },
     methods: {
       /* 异步搜索商品列表 */
-      getProductList() {
+      getProductList(currentPage=1) {
+        this.options.pageNo = currentPage
         this.$store.dispatch('getProductList', this.options)
       },
+      // changeCurrentPage(currentPage){
+      //     this.options.pageNo = currentPage,
+      //     this.getProductList() 
+      // },
       isActive(orderFlag){
         return this.options.order.indexOf(orderFlag) === 0 
       },

@@ -4,6 +4,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
+import store from '@/store'   // 在组件中不需要引入: this.$store
 
 
 /* 
@@ -30,12 +31,35 @@ VueRouter.prototype.replace = function (location, onComplete, onAbort) {
 
 // 声明使用vue的插件
 Vue.use(VueRouter)
-
-// 向外暴露一个路由器对象
-export default new VueRouter({
+const router = new VueRouter({
   // mode: 'hash', // 路由路径带#号
   mode: 'history', // 路由路径不带#号
   
   // 配置应用中的所有路由
-  routes
+  routes,
+
+  // 滚动配置  ==> 跳转路由时自动滚动到最上面 
+  scrollBehavior (to, from, savedPosition) {
+    // return 期望滚动到哪个的位置
+    return {
+      x: 0,  // 水平方向最左边
+      y: 0   // 竖直方向最上面
+    }
+  }
 })
+
+const checkPaths = ['/trade','/pay','/center']
+router.beforeEach((to,from,next)=>{
+  const targetPath = to.path
+  if(checkPaths.find(path=>targetPath.indexOf(path) === 0)){
+    if(store.state.user.userInfo.name){
+       next()
+    }else{
+      next('/login?redirect=' + targetPath)
+    }
+  }else{
+    next()
+  }
+})
+// 向外暴露一个路由器对象
+export default router

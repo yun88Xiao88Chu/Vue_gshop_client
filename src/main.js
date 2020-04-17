@@ -10,11 +10,14 @@ import router from './router'
 import store from './store'
 import TypeNav from './components/TypeNav'
 import Carousel from './components/Carousel'
+import Pagination from './components/Pagination'
 import './mock/mockServer' // 加载mock接口的主模块
 
 // 注册全局组件
-Vue.component('TypeNav', TypeNav) // 全局使用<TypeNav/> <type-nav/>
-Vue.component('Carousel', Carousel) // 全局使用<Carousel/> <carousel/>
+Vue.component('TypeNav', TypeNav) // 全局使用<TypeNav/> <type-nav/> 分类搜索组件
+Vue.component('Carousel', Carousel) // 全局使用<Carousel/> <carousel/>轮播组件
+Vue.component('Pagination',Pagination)//全局使用<Pagination/> <pagination/>分页组件
+
 
 Vue.config.productionTip = false
 

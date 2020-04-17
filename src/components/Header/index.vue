@@ -5,15 +5,22 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <!-- 已登录状态 -->
+          <p v-if="userInfo.name">
+            <span >{{userInfo.name}}</span>
+            &nbsp;&nbsp;&nbsp;
+            <a href="javascript:" @click="logout">退出</a>
+          </p>
+          <!-- 未登录显示 -->
+          <p v-else>
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
           </p>
         </div>
         <div class="typeList">
-          <a href="###">我的订单</a>
-          <a href="###">我的购物车</a>
+          <router-link to="/center/myorder">我的订单</router-link>
+          <router-link to="/shopcart">我的购物车</router-link>
           <a href="###">我的尚品汇</a>
           <a href="###">尚品汇会员</a>
           <a href="###">企业采购</a>
@@ -41,6 +48,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
   export default {
     name: 'Header',
 
@@ -48,6 +56,11 @@
       return {
         keyword: ''
       }
+    },
+    computed: {
+      ...mapState({
+        userInfo:state=>state.user.userInfo
+      })
     },
     mounted() {
       //通过全局总线绑定removeKeyword事件监听
@@ -57,31 +70,14 @@
     },
 
     methods: {
-      toSearch () {
-        /* 
-        利用router对象来跳转路由
-        this.$router: 得到的是路由器对象(包含跳转路由的一些方法)
-        this.$route: 得到的是当前路由信息对象(包含的是当前路由的相关数据属性: path/params/query/meta)
-        */
-        // this.$router.push('/search')
-
-        // 问题: 编程式路由跳转到当前路由, 控制台抛出NavigationDuplicated的错误
-        // 方案1: 在跳转时指定成功或失败的回调函数
-        /* this.$router.push('/search', () => {  // 可以
-          // console.log('跳转成功')
-        }) */
-        // this.$router.push('/search').then(() => {})  // 不可以
-        
-        // this.$router.push('/search', undefined, () => {})  // 可以
-        // this.$router.push('/search').catch(() => {}) // 可以
-        
-        // 使用query参数
-        // this.$router.push(`/search?keyword=${this.keyword}`)
-        // this.$router.push({path: '/search', query: {keyword: this.keyword}})
-        // 使用params参数
-        // this.$router.push(`/search/${this.keyword}`)
-        // this.$router.push({path: '/search', params: {keyword: this.keyword}})  // 不可以
-        
+      async logout(){
+        try {
+          await this.$store.dispatch('logout')
+        } catch (error) {
+          alert(error.message)
+        }
+      },
+      toSearch () { 
         // 得到当前的请求路径和query参数对象
             const {path,query} = this.$route
             if(this.keyword){
