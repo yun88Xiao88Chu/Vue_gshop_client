@@ -6,11 +6,13 @@ import user from './user'
 import search from './search'
 import detail from './detail'
 import shopCart from './shopCart.js'
+import order from './order.js'
 
 export default {
   home,
   user,
   search,
   detail,
-  shopCart
+  shopCart,
+  order
 }

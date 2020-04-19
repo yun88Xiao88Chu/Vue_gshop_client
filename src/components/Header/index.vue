@@ -73,6 +73,7 @@ import {mapState} from 'vuex'
       async logout(){
         try {
           await this.$store.dispatch('logout')
+          this.$router.replace('/')
         } catch (error) {
           alert(error.message)
         }

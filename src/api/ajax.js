@@ -29,6 +29,7 @@ ajax.interceptors.request.use((config) => {
   NProgress.start()
   
 
+  // let token = JSON.stringify(localStorage.getItem('token'))
   let token = store.state.user.userInfo.token
   if (token) {
     config.headers['token'] = token
